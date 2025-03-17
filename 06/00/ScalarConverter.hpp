@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 19:57:58 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/17 18:15:01 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:55:30 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ class ScalarConverter
 {
 	private:
 		ScalarConverter();
+		ScalarConverter(const ScalarConverter& other);
 		~ScalarConverter();
+
+		ScalarConverter& operator = (const ScalarConverter& other);
 		
 	public:
 		static void convert(std::string input);

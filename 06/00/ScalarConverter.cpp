@@ -6,11 +6,17 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 19:00:25 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/17 18:15:16 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:56:33 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+
+ScalarConverter::ScalarConverter(){}
+ScalarConverter::ScalarConverter(const ScalarConverter& other){(void)other;}
+ScalarConverter::~ScalarConverter(){}
+
+ScalarConverter& ScalarConverter::operator = (const ScalarConverter& other){(void)other; return *this;}
 
 template <typename T>
 static void	printChar(T n)
@@ -46,7 +52,7 @@ static void	printFloat(T n)
 }
 
 template <typename T>
-static void printDouble(T n)
+static void	printDouble(T n)
 {
 	double d = static_cast<double>(n);
 
@@ -58,7 +64,7 @@ static void printDouble(T n)
 		std::cout << std::fixed << std::setprecision(1) << "double: " << d << std::endl;
 }
 
-static void Convert()
+static void	Convert()
 {
 	std::cout << "char: impossible" << std::endl;
 	std::cout << "int: impossible" << std::endl;
@@ -67,7 +73,7 @@ static void Convert()
 }
 
 template <typename T>
-static void Convert(T n)
+static void	Convert(T n)
 {
 	printChar(n);
 	printInt(n);
@@ -75,7 +81,7 @@ static void Convert(T n)
 	printDouble(n);
 }
 
-void ScalarConverter::convert(std::string input)
+void	ScalarConverter::convert(std::string input)
 {
 	char *endptr;
 	
