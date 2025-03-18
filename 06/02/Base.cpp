@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:52:57 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/18 19:05:05 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:16:35 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ Base* generate(void)
 
 void identify(Base* p)
 {
+	std::cout << "Pointer: ";
 	if (dynamic_cast<A*>(p))
 		std::cout << "A" << std::endl;
 	if (dynamic_cast<B*>(p))
@@ -37,6 +38,7 @@ void identify(Base* p)
 
 void identify(Base& p)
 {
+	std::cout << "Reference: ";
 	try
 	{
 		p = dynamic_cast<A&>(p);
