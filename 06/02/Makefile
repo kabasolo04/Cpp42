@@ -1,4 +1,4 @@
-NAME = Serialization
+NAME = IdentifyRealType
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-g
 
