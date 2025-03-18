@@ -1,36 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Data.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 19:57:58 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/18 12:17:38 by kabasolo         ###   ########.fr       */
+/*   Created: 2025/03/18 13:16:40 by kabasolo          #+#    #+#             */
+/*   Updated: 2025/03/18 15:47:39 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALARCONVERTER_HPP
-#define SCALARCONVERTER_HPP
-
 #include <iostream>
-#include <cstdlib>
-#include <iomanip>
-#include <cerrno>
-#include <limits>
-#include <cmath>
 
-class ScalarConverter
+struct Data
 {
-	private:
-		ScalarConverter();
-		ScalarConverter(const ScalarConverter& other);
-		~ScalarConverter();
-
-		ScalarConverter& operator = (const ScalarConverter& other);
-		
-	public:
-		static void convert(std::string input);
+	std::string	name;
+	std::string	writter;
+	int 		id;
 };
-
-#endif

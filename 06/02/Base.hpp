@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 19:57:58 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/18 12:17:38 by kabasolo         ###   ########.fr       */
+/*   Created: 2025/03/18 16:06:51 by kabasolo          #+#    #+#             */
+/*   Updated: 2025/03/18 19:03:18 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALARCONVERTER_HPP
-#define SCALARCONVERTER_HPP
+#ifndef BASE_HPP
+#define BASE_HPP
 
 #include <iostream>
 #include <cstdlib>
-#include <iomanip>
-#include <cerrno>
-#include <limits>
-#include <cmath>
+#include <ctime>
 
-class ScalarConverter
+class Base
 {
-	private:
-		ScalarConverter();
-		ScalarConverter(const ScalarConverter& other);
-		~ScalarConverter();
-
-		ScalarConverter& operator = (const ScalarConverter& other);
-		
 	public:
-		static void convert(std::string input);
+		virtual ~Base(){};
 };
+
+class A: public Base {};
+class B: public Base {};
+class C: public Base {};
+
+Base*	generate(void);
+void	identify(Base* p);
+void	identify(Base& p);
 
 #endif
