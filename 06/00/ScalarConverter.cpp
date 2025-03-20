@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 19:00:25 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/18 13:14:17 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:20:31 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,6 @@ static void	printDouble(T n)
 		std::cout << std::fixed << std::setprecision(1) << "double: " << d << std::endl;
 }
 
-static void	Convert()
-{
-	std::cout << "char: impossible" << std::endl;
-	std::cout << "int: impossible" << std::endl;
-	std::cout << "float: impossible" << std::endl;
-	std::cout << "double: impossible" << std::endl;
-}
-
 template <typename T>
 static void	Convert(T n)
 {
@@ -88,34 +80,24 @@ void	ScalarConverter::convert(std::string input)
 	errno = 0;
 	int i = std::strtol(input.c_str(), &endptr, 10);
 	if (errno == 0 && endptr[0] == '\0')
-	{
-		//std::cout << "INT" << std::endl;
 		return (Convert(i));
-	}
 
 	char c = input[0];
 	if (input.size() == 1)
-	{
-		//std::cout << "CHAR" << std::endl;
 		return (Convert(c));
-	}
 
 	errno = 0;
 	float f = std::strtof(input.c_str(), &endptr);
 	if (errno == 0 && endptr[0] == 'f' && endptr[1] == '\0')
-	{
-		//std::cout << "FLOAT" << std::endl;
 		return (Convert(f));
-	}
 
 	errno = 0;
 	double d = std::strtod(input.c_str(), &endptr);
 	if (errno == 0 && endptr[0] == '\0')
-	{
-		//std::cout << "DOUBLE" << std::endl;
 		return (Convert(d));
-	}
-	
-	//std::cout << "NONE" << std::endl;
-	Convert();
+
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: impossible" << std::endl;
+	std::cout << "double: impossible" << std::endl;
 }

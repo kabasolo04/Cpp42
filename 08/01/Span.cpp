@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:40:36 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/20 18:03:39 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:41:38 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ unsigned int Span::shortestSpan()
 	if (_nums.size() < 2)
 			throw std::runtime_error("Not enough numbers to find a span.");
 
-	std::vector<int> sorted = _nums;
+	std::vector<int> sorted(_nums);
 	std::sort(sorted.begin(), sorted.end());
 
 	unsigned int diff = UINT_MAX;
