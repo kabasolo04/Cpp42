@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:42:12 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/24 20:39:56 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:17:58 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ bool Date::valiDate(const std::string& date)
 
 	if (ss.fail() || sign1 != '-' || sign2 != '-')
 		return (0);
+
 	if (month < 1 || month > 12 || day < 1)
 		return (0);
 
@@ -98,6 +99,34 @@ std::string Date::getDate()
 	return oss.str();
 }
 
+bool	Date::operator < (const Date& other) const
+{
+    if (_year != other._year)
+        return _year < other._year;
+    if (_month != other._month)
+        return _month < other._month;
+    return _day < other._day;
+}
+
+bool	Date::operator > (const Date& other) const
+{
+    if (_year != other._year)
+        return _year > other._year;
+    if (_month != other._month)
+        return _month > other._month;
+    return _day > other._day;
+}
+
+bool	Date::operator <= (const Date& other) const
+{
+	return !(*this > other);
+}
+
+bool	Date::operator >= (const Date& other) const
+{
+    return !(*this < other);
+}
+
 Date&	Date::operator = (const Date& other) 
 {
 	if (this != &other)
@@ -105,7 +134,6 @@ Date&	Date::operator = (const Date& other)
 		_year = other._year;
 		_month = other._month;
 		_day = other._day;
-
 	}
 	return (*this);
 }

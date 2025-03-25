@@ -6,13 +6,13 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:01:04 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/25 12:17:59 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:38:33 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DataBase.hpp"
 
-DataBase::DataBase() {}
+DataBase::DataBase(): _first(NULL), _last(NULL) {}
 
 DataBase::DataBase(const std::string& filename)
 {
@@ -24,6 +24,7 @@ DataBase::DataBase(const std::string& filename)
 	std::string date;
 	std::string num;
 
+	std::getline(infile, num);
 	int i = 0;
 	while (std::getline(infile, date, ',') && std::getline(infile, num))
 	{
@@ -33,21 +34,26 @@ DataBase::DataBase(const std::string& filename)
 			i ++;
 		}
 		_data.insert(std::make_pair(date, std::strtof(num.c_str(), NULL)));
+		_last = date;
 	}
-	_last = date;
 }
 
 DataBase::DataBase(const DataBase& other): _data(other._data) {}
 
 DataBase::~DataBase() {}
 
-const float&	DataBase::operator [] (const std::string& date)
+float&	DataBase::operator [] (const Date& date)
 {
-	Date tempDate(date);
+	Date cpyDate(date);
+	Date firstDate(_first);
 
-	while (_data.find(tempDate.getDate()) == _data.end() || date == tempDate.)
-		tempDate.decDate();
-	return (_data[tempDate.getDate()]);
+	while (_data.find(cpyDate) == _data.end())
+	{
+		if (date < firstDate)
+			throw std::runtime_error("Error: date too low");
+		cpyDate.decDate();
+	}
+	return (_data[cpyDate]);
 }
 
 DataBase&	DataBase::operator = (const DataBase& other)

@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:40:04 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/25 12:19:20 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:40:31 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ class Date
 		Date(const Date& other);
 		~Date();
 
-		void decDate();
-		void incDate();
-		std::string getDate();
-		bool valiDate(const std::string& date);
+		void		decDate();
+		void		incDate();
+		bool		valiDate(const std::string& date);
+		std::string	getDate();
 
-		Date&				operator = (const Date& other);
+		bool	operator < (const Date& other) const;
+		bool	operator > (const Date& other) const;
+		bool	operator <= (const Date& other) const;
+		bool	operator >= (const Date& other) const;
+
+		Date&	operator = (const Date& other);
 };
-
-
-
 
 #endif
