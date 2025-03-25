@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:01:04 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/25 12:05:40 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:14:44 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,17 @@ DataBase::DataBase(const std::string& filename)
 	std::string date;
 	std::string num;
 
+	int i = 0;
 	while (std::getline(infile, date, ',') && std::getline(infile, num))
+	{
+		if (i == 0)
+		{
+			_first = date;
+			i ++;
+		}
 		_data.insert(std::make_pair(date, std::strtof(num.c_str(), NULL)));
+	}
+	_last = date;
 }
 
 DataBase::DataBase(const DataBase& other): _data(other._data) {}

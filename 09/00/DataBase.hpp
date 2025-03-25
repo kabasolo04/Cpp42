@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:45:47 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/24 19:19:00 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:15:47 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,17 @@ class DataBase
 {
 	private:
 		std::map<std::string, float> _data;
+		std::string	_first;
+		std::string	_last;
 
 	public:
 		DataBase();
 		DataBase(const std::string& filename);
 		DataBase(const DataBase& other);
 		~DataBase();
+
+		const std::string& first();
+		const std::string& last();
 
 		const float&	operator [] (const std::string& date);
 		DataBase&		operator = (const DataBase& other);
