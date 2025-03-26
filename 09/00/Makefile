@@ -3,8 +3,7 @@ NAME = btc
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 SRCS =	main.cpp \
-		DataBase.cpp \
-		Date.cpp
+		BitCoinExchange.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
