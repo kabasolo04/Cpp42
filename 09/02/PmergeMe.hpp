@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MutantStack.hpp                                    :+:      :+:    :+:   */
+/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 18:21:44 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/26 17:35:49 by kabasolo         ###   ########.fr       */
+/*   Created: 2025/03/26 16:54:22 by kabasolo          #+#    #+#             */
+/*   Updated: 2025/03/31 13:37:03 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MUTANTSTACK_HPP
-#define MUTANTSTACK_HPP
+#ifndef PMERGEME_HPP
+#define PMERGEME_HPP
 
 #include <iostream>
-#include <stack>
-#include <deque>
+#include <list>
 
-template <typename T>
-class MutantStack: public std::stack<T>
-{	
+class PmergeMe
+{
+	private:
+		std::list<std::list<int>>	elements;
+		static int					level;
+
 	public:
-		typedef typename std::deque<T>::iterator	iterator;
+		PmergeMe();
+		PmergeMe(const PmergeMe& other);
+		~PmergeMe();
 
-		MutantStack();
-		MutantStack(const MutantStack& other);
-		~MutantStack();
+		void	addNums(int newNum);
+		void	addElem(const std::list<int>& newElem);
+		void	sortIt();
+		std::list<std::list<int>>&	PmergeMe::getElements();
 
-		iterator begin();
-		iterator end();
-
-		MutantStack&	operator = (const MutantStack& other);
+		PmergeMe&	operator = (const PmergeMe& other);
 };
-
-#include "MutantStack.tpp"
 
 #endif

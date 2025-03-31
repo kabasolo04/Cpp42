@@ -22,8 +22,8 @@
 class BitCoinExchange
 {
 	private:
-		std::map<std::string, float> _data; // [YYYY-MM-DD]->(float bitCoin value) :D
-		static const int daysInMonth[13];
+		std::map<std::string, float>	_data;	// [YYYY-MM-DD]->(float bitCoin value) :D
+		static const int				daysInMonth[13];
 
 		BitCoinExchange();
 

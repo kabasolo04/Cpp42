@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MutantStack.hpp                                    :+:      :+:    :+:   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 18:21:44 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/26 17:35:49 by kabasolo         ###   ########.fr       */
+/*   Created: 2025/03/26 14:04:35 by kabasolo          #+#    #+#             */
+/*   Updated: 2025/03/26 14:28:30 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MUTANTSTACK_HPP
-#define MUTANTSTACK_HPP
+#ifndef RPN_HPP
+#define RPN_HPP
 
 #include <iostream>
 #include <stack>
-#include <deque>
 
-template <typename T>
-class MutantStack: public std::stack<T>
-{	
+class RPN
+{
+	private:
+		std::stack<int> _stack;
+		
 	public:
-		typedef typename std::deque<T>::iterator	iterator;
+		RPN();
+		RPN(const RPN& other);
+		~RPN();
 
-		MutantStack();
-		MutantStack(const MutantStack& other);
-		~MutantStack();
+		void add(char input);
 
-		iterator begin();
-		iterator end();
+		int getRes();
 
-		MutantStack&	operator = (const MutantStack& other);
+		RPN&	operator = (const RPN& other);
 };
-
-#include "MutantStack.tpp"
 
 #endif
