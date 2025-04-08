@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:52:19 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/07 13:57:55 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:15:14 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int main()
 	temp.push_front(8);
 	a.addElem(temp);
 	temp.pop_front();
+	temp.push_front(1);
+	a.addElem(temp);
+	temp.pop_front();
 	temp.push_front(2);
 	a.addElem(temp);
 	temp.pop_front();
@@ -39,6 +42,22 @@ int main()
 	temp.pop_front();
 	temp.push_front(4);
 	a.addElem(temp);
+	temp.pop_front();
+	temp.push_front(10);
+	a.addElem(temp);
+	temp.pop_front();
+	temp.push_front(11);
+	a.addElem(temp);
+	temp.pop_front();
+	temp.push_front(5);
+	a.addElem(temp);
+	temp.pop_front();
+	temp.push_front(14);
+	a.addElem(temp);
+	temp.pop_front();
+	temp.push_front(12);
+	a.addElem(temp);
+	
 
 	a.printElements();
 

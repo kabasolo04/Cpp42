@@ -6,15 +6,17 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:46 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/07 15:35:22 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:25:33 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe():level(0) {}
+const unsigned int PmergeMe::jacobsthal[] = { 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203 };
 
-PmergeMe::PmergeMe(int newLevel):level(newLevel) {}
+PmergeMe::PmergeMe():level(0), jacob(0) {}
+
+PmergeMe::PmergeMe(int newLevel):level(newLevel), jacob(0) {}
 
 PmergeMe::PmergeMe(const PmergeMe& other): elements(other.elements){}
 
@@ -29,16 +31,16 @@ void	PmergeMe::addNums(int newNum)
 
 void	PmergeMe::addElem(std::list<int> newElem)
 {
-	if (newElem.size() < (long unsigned int)(1 << (level - (level > 0))))
+	if (newElem.size() < befListSize)
 		return ;
 
 	else if (elements.size() == 0) //First element of the list
 		elements.push_back(newElem);
 
-	else if (elements.back().size() == (long unsigned int)(1 << level)) //Last element FULL
+	else if (elements.back().size() == listSize) //Last element FULL
 		elements.push_back(newElem);
-	
-	else if (elements.back().size() < (long unsigned int)(1 << level)) //Last element NOT FULL
+
+	else if (elements.back().size() < listSize) //Last element NOT FULL
 	{
 		if (elements.back().back() < newElem.back()) //Gotta merge after
 			elements.back().splice(elements.back().end(), newElem);
@@ -52,36 +54,64 @@ void	PmergeMe::addElem(std::list<int> newElem)
 
 void	PmergeMe::merge()
 {
-	PmergeMe temp(level + 1);
+	if (elements.size() < 2)
+		return ;
+	if (elements.size() == 2 && elements.front().size() != elements.back().size())
+		return ;
 	
-	std::list<std::list<int> >::iterator	it;
+	PmergeMe temp(level + 1);
+
+	std::cout << level << ": ";
+	printElements();
+
+	myList::iterator	it;
 	for (it = elements.begin(); it != elements.end(); ++it)
 		temp.addElem(*it);
-	
-	//std::cout << level << ":";
-	//temp.printElements();
 
-	if (temp.elements.size() > 2)
-		temp.merge();
-	else if (temp.elements.size() == 2 && temp.elements.back().size() == (long unsigned int)(1 << (level - (level > 0))))
-		temp.merge();
+	temp.merge();
 
 	temp.getChanges(elements);
-
+	std::cout << level << ": ";
+	printElements();
 	insert();
+	std::cout << level << ": ";
+	printElements();
 }
+
+/*
+	myList::iterator	it = ++elements.begin();
+	unsigned int		itJacob = 1;
+	unsigned int		jacob = 0;
+
+	while (it != elements.end() && ++it != elements.end())
+	{
+		myList::iterator	ite = elements.begin();
+		myList::iterator	current = it++;
+		unsigned int		i = 0;
+	
+		if ((*current).size() != befListSize)
+			return ;
+		
+		while (ite != elements.end() && i < jacobsthal[jacob] && !( (*current).back() < (*ite).back() ))
+			i += (current != ite++);
+
+		elements.splice(ite, elements, current);
+
+		jacob += (++itJacob == jacobsthal[jacob]);
+	}
+*/
 
 void	PmergeMe::insert()
 {
-	
+
 }
 
 void	PmergeMe::printElements()
 {
-	std::list<std::list<int> >::iterator it;
+	myList::iterator it;
 	for (it = elements.begin(); it != elements.end(); it++)
 	{
-		std::list<int>::iterator ite;
+		myInnerList::iterator ite;
 		for (ite = it->begin(); ite != it->end(); ite++)
 			std::cout << " " << *ite;
 		std::cout << " |";
@@ -91,14 +121,14 @@ void	PmergeMe::printElements()
 
 void	PmergeMe::getChanges(std::list<std::list <int> >& elem)
 {
-	std::list<std::list<int> >& A(elements);
-	std::list<std::list<int> >& B(elem);
+	myList&	A(elements);
+	myList&	B(elem);
 
-	std::list<std::list<int> >::iterator itA;
-	std::list<std::list<int> >::iterator itB = B.begin();
+	myList::iterator	itA;
+	myList::iterator	itB = B.begin();
 
-	std::list<int>::iterator itInnerA;
-	std::list<int>::iterator itInnerB = (*itB).begin();
+	myInnerList::iterator itInnerA;
+	myInnerList::iterator itInnerB = (*itB).begin();
 
 	for (itA = A.begin(); itA != A.end(); itA++)
 	{

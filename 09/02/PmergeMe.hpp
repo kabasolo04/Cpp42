@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:22 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/07 15:27:22 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:26:28 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,18 @@
 #include <iostream>
 #include <list>
 
+#define myList		std::list<std::list<int> >
+#define myInnerList	std::list<int>
+#define listSize	(long unsigned int)(1 << level)
+#define befListSize	(long unsigned int)(1 << (level - (level > 0)))
 class PmergeMe
 {
 	private:
-		std::list<std::list <int> >	elements;
-		unsigned int				level;
+		myList			elements;
+		unsigned int	level;
+		unsigned int	jacob;
+
+		static const unsigned int	jacobsthal[];
 
 		PmergeMe(int newLevel);
 
@@ -31,9 +38,9 @@ class PmergeMe
 		
 		void	addNums(int newNum);
 		void	cpyNums();
-		void	addElem(std::list<int> newElem);
+		void	addElem(myInnerList newElem);
 	
-		void	getChanges(std::list<std::list <int> >& elem);
+		void	getChanges(myList& elem);
 		void	printElements();
 	
 		void	merge();
