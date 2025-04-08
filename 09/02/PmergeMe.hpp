@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:22 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/08 13:26:28 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:24:16 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@
 #define myInnerList	std::list<int>
 #define listSize	(long unsigned int)(1 << level)
 #define befListSize	(long unsigned int)(1 << (level - (level > 0)))
+
 class PmergeMe
 {
 	private:
 		myList			elements;
 		unsigned int	level;
-		unsigned int	jacob;
 
 		static const unsigned int	jacobsthal[];
+		static const unsigned int	jacobFac[];
 
 		PmergeMe(int newLevel);
 

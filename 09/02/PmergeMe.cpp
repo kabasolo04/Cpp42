@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:46 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/08 13:25:33 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:26:42 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 const unsigned int PmergeMe::jacobsthal[] = { 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203 };
 
-PmergeMe::PmergeMe():level(0), jacob(0) {}
+PmergeMe::PmergeMe():level(0) {}
 
-PmergeMe::PmergeMe(int newLevel):level(newLevel), jacob(0) {}
+PmergeMe::PmergeMe(int newLevel):level(newLevel) {}
 
 PmergeMe::PmergeMe(const PmergeMe& other): elements(other.elements){}
 
@@ -78,32 +78,30 @@ void	PmergeMe::merge()
 	printElements();
 }
 
-/*
+void	PmergeMe::insert()
+{
 	myList::iterator	it = ++elements.begin();
-	unsigned int		itJacob = 1;
+	unsigned int		itJacob = 0;
 	unsigned int		jacob = 0;
 
-	while (it != elements.end() && ++it != elements.end())
+	while (it++ != elements.end())
 	{
 		myList::iterator	ite = elements.begin();
 		myList::iterator	current = it++;
 		unsigned int		i = 0;
-	
-		if ((*current).size() != befListSize)
+
+		if ((*current).size() != listSize)
 			return ;
-		
-		while (ite != elements.end() && i < jacobsthal[jacob] && !( (*current).back() < (*ite).back() ))
+	
+		std::cout << (*current).back() << ": " << jacobsthal[jacob] + itJacob << std::endl;
+			
+		while (ite != elements.end() && i < jacobsthal[jacob] + itJacob && !((*current).back() < (*ite).back()))
 			i += (current != ite++);
 
 		elements.splice(ite, elements, current);
 
-		jacob += (++itJacob == jacobsthal[jacob]);
+		jacob += (++itJacob == jacobsthal[jacob] - 1);
 	}
-*/
-
-void	PmergeMe::insert()
-{
-
 }
 
 void	PmergeMe::printElements()
