@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:46 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/08 18:26:42 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:03:57 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	PmergeMe::insert()
 	unsigned int		itJacob = 0;
 	unsigned int		jacob = 0;
 
-	while (it++ != elements.end())
+	while (it != elements.end() && ++it != elements.end())
 	{
 		myList::iterator	ite = elements.begin();
 		myList::iterator	current = it++;
@@ -95,7 +95,7 @@ void	PmergeMe::insert()
 	
 		std::cout << (*current).back() << ": " << jacobsthal[jacob] + itJacob << std::endl;
 			
-		while (ite != elements.end() && i < jacobsthal[jacob] + itJacob && !((*current).back() < (*ite).back()))
+		while (ite != elements.end() && (*ite).size() == listSize && i < jacobsthal[jacob] + itJacob && !((*current).back() < (*ite).back()))
 			i += (current != ite++);
 
 		elements.splice(ite, elements, current);
