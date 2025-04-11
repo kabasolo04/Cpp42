@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:22 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/08 14:24:16 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:56:23 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,25 @@
 
 #include <iostream>
 #include <list>
+#include <vector>
 
 #define myList		std::list<std::list<int> >
 #define myInnerList	std::list<int>
+#define myVector	std::vector<int>
 #define listSize	(long unsigned int)(1 << level)
 #define befListSize	(long unsigned int)(1 << (level - (level > 0)))
 
 class PmergeMe
 {
 	private:
-		myList			elements;
+		myList			listElements;
+		myVector		vecElements;
 		unsigned int	level;
 
 		static const unsigned int	jacobsthal[];
-		static const unsigned int	jacobFac[];
 
 		PmergeMe(int newLevel);
+		void	insert();
 
 	public:
 		PmergeMe();
@@ -38,14 +41,14 @@ class PmergeMe
 		~PmergeMe();
 		
 		void	addNums(int newNum);
-		void	cpyNums();
 		void	addElem(myInnerList newElem);
 	
 		void	getChanges(myList& elem);
 		void	printElements();
-	
+
 		void	merge();
-		void	insert();
+		void	startList();
+		void	startVec();
 	
 		PmergeMe&	operator = (const PmergeMe& other);
 };
