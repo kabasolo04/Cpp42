@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:22 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/10 18:56:23 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:57:50 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <algorithm>
 
 #define myList		std::list<std::list<int> >
 #define myInnerList	std::list<int>

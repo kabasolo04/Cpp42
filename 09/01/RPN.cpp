@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:04:27 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/03/26 17:20:10 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:55:57 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void RPN::add(char input)
 			return(_stack.push(num2 * num1));
 		case '/':
 			if (num1 == 0)
-				throw std::runtime_error("Error");
+				throw std::runtime_error("Error: tried dividing by 0");
 			return(_stack.push(num2 / num1));
 		default:
 			throw std::runtime_error("Error");

@@ -6,7 +6,7 @@
 /*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:54:46 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/11 20:20:23 by kabasolo         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:11:41 by kabasolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,6 @@ void	PmergeMe::merge()
 	
 	PmergeMe temp(level + 1);
 
-	std::cout << level << ": ";
-	printElements();
-
 	myList::iterator	it;
 	for (it = listElements.begin(); it != listElements.end(); ++it)
 		temp.addElem(*it);
@@ -72,103 +69,64 @@ void	PmergeMe::merge()
 	temp.getChanges(listElements);
 
 	insert();
-
-	std::cout << level << ": ";
-	printElements();
 }
 
-/*
-	myList::iterator	it = ++listElements.begin();
-	unsigned int		itJacob = 0;
-	unsigned int		jacob = 0;
-
-	while (it != listElements.end() && ++it != listElements.end())
-	{
-		myList::iterator	ite = listElements.begin();
-		myList::iterator	current = it++;
-		unsigned int		i = 0;
-
-		if ((*current).size() != listSize)
-			return ;
-	
-		std::cout << (*current).back() << ": " << jacobsthal[jacob] + itJacob << std::endl;
-		
-		while (ite != listElements.end() && (*ite).size() == listSize && i < jacobsthal[jacob] + itJacob && !((*current).back() < (*ite).back()))
-			i += (current != ite++);
-
-		listElements.splice(ite, listElements, current);
-
-		jacob += (++itJacob == jacobsthal[jacob] - 1);
+struct CompareListBack {
+	bool operator()(const std::list<int>& a, const std::list<int>& b) const {
+		return a.back() < b.back();
 	}
-*/
-
-/*
-		i = jacobsthal[jacob - 1];
-		while (i < jacobsthal[jacob])
-		{
-			if (++it == listElements.end() || (*it).size() != listSize)
-			{
-				it --;
-				flag = 0;
-				break ;
-			}
-			if (++it == listElements.end() || (*it).size() != listSize)
-			{
-				it --;
-				it --;
-				flag = 0;
-				break ;
-			}
-			i ++;
-		}
-*/
+};
 
 void	PmergeMe::insert()
 {
 	myList::iterator	it = ++listElements.begin();
-	//unsigned int		jacob = 1;
-	//unsigned int		i = 0;
-	//char				flag = 1;
-	myList				pend;
+	unsigned int		jacob = 1;
+	unsigned int		i = 0;
 	
-	while (++it != listElements.end() || (*it).size() == listSize)
+	while (it != listElements.end() && (*it).size() == listSize)
 	{
-		pend.push_front(*it);
-		it = listElements.erase(it);
-		if (it == listElements.end() || (*it).size() != listSize)
-			break ;
-	}
+		myList			pend;
 	
-	it = ++listElements.begin();
-
-	while (pend.size())
-	{
-		
-	}
-	
-	/*
-	while (flag)
-	{
-		myList	pend;
-		i = jacobsthal[jacob - 1];
-		
-		myList::iterator	temp = it;
-		myList::iterator	bef = --temp;
-
-		while (listElements.begin() != temp && (*bef).back() > (*temp).back())
-			temp --;
-
-		listElements.splice(temp, listElements, it++);
-		
-		std::cout << "i: " << i << " jakovo: " << jacobsthal[jacob] - jacobsthal[jacob - 1];
-		
-		std::cout << " ola " << (*it).back() << std::endl;
-
-		i = jacobsthal[jacob] - jacobsthal[jacob - 1];
+		while (++i < jacobsthal[jacob])
+		{
+			if (it == listElements.end() || (*it).size() != listSize)
+				break ;
+			if (++it == listElements.end() || (*it).size() != listSize)
+				break ;
+			pend.push_front(*it);
+			it = listElements.erase(it);
+		}
+		while (!pend.empty())
+		{
+			myList::iterator newIt = listElements.begin();
+			newIt = std::upper_bound(newIt, it, *pend.begin(), CompareListBack());
+			listElements.splice(newIt, pend, pend.begin());
+		}
 		jacob ++;
 	}
-		*/
 }
+/*
+while (flag)
+{
+	myList	pend;
+	i = jacobsthal[jacob - 1];
+	
+	myList::iterator	temp = it;
+	myList::iterator	bef = --temp;
+
+	while (listElements.begin() != temp && (*bef).back() > (*temp).back())
+		temp --;
+
+	listElements.splice(temp, listElements, it++);
+	
+	std::cout << "i: " << i << " jakovo: " << jacobsthal[jacob] - jacobsthal[jacob - 1];
+	
+	std::cout << " ola " << (*it).back() << std::endl;
+
+	i = jacobsthal[jacob] - jacobsthal[jacob - 1];
+	jacob ++;
+}
+	*/
 
 /*
 		while (it != listElements.end() && ++it != listElements.end())
