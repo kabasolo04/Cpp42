@@ -1,54 +1,57 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kabasolo <kabasolo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 16:52:19 by kabasolo          #+#    #+#             */
-/*   Updated: 2025/04/21 18:59:49 by kabasolo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "PmergeMe.hpp"
-#include <cmath>
+#include "Pmerge.hpp"
+#include <climits>
+#include <cerrno>
 #include <cstdlib>
-#include <ctime>
 
-int F(int n)
+static std::vector<std::string> split_numbers(const std::string &input)
 {
-	int sum = 0;
-	for (int k = 1; k <= n; ++k) {
-		double value = (3.0 / 4.0) * k;
-		sum += static_cast<int>(ceil(log2(value)));
-	}
-	return sum;
-}
-//int main(int argc, char **argv)
-int main(int argc, char** argv)
-{
-	if (argc != 2)
-		return (1);
+	std::vector<std::string> result;
+	std::size_t i = 0;
 
-	PmergeMe a;
-
-	std::srand(std::time(0));
-	int	len = atoi(argv[1]);
-
-	for (int i = 0; i < len; ++i)
+	while (i < input.length())
 	{
-		int num = std::rand() % len;
-		a.addNums(num);
+		while (i < input.length() && input[i] == ' ')
+			++i;
+
+		if (i >= input.length())
+			break;
+
+		std::size_t start = i;
+
+		while (i < input.length() && input[i] != ' ')
+			++i;
+
+		result.push_back(input.substr(start, i - start));
 	}
+	return result;
+}
 
-	
-	a.printElements();
+int	main(int argc, char** argv)
+{
+	PmergeVector	_vector;
+//	PmergeList		_list;
 
-	a.merge();
+	if (argc != 2)
+		return std::cerr << "Error\n", 1;
 
-	a.printElements();
+	std::vector<std::string> tokens = split_numbers(argv[1]);
 
-	std::cout << "Should be: " << F(len) << std::endl;
-	std::cout << "what i did: " << a.getComp() << std::endl;
-	return (0);
+	if (tokens.empty())
+		return std::cerr << "Error\n", 1;
+
+	for (std::size_t i = 0; i < tokens.size(); ++i)
+	{
+		char *end;
+		errno = 0;
+		long value = std::strtol(tokens[i].c_str(), &end, 10);
+
+		if (*end != '\0' || errno == ERANGE || value < 0 || value > INT_MAX)
+			return std::cerr << "Error\n", 1;
+
+		_vector.add(static_cast<int>(value));
+//		_list.add(static_cast<int>(value));
+	}
+	_vector.sort();
+//	_list.sort();
+	return 0;
 }
