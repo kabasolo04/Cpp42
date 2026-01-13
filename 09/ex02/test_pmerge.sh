@@ -5,38 +5,45 @@ RED="\033[1;31m"
 YELLOW="\033[1;33m"
 RESET="\033[0m"
 
-MAX=5000
-MODE="seq"   # seq | rand
+MAX_SIZE=3500
+CYCLE=1
 
-echo -e "${YELLOW}🚀 Pmerge tester started (${MODE} mode)${RESET}"
+echo -e "${YELLOW}🚀 Pmerge tester started (random values, sizes 1→${MAX_SIZE}, infinite)${RESET}"
 echo
 
-for ((i=1; i<=MAX; i++)); do
-	args=""
+while true; do
+	echo -e "${YELLOW}🔁 Cycle #$CYCLE${RESET}"
 
-	if [ "$MODE" = "seq" ]; then
-		for ((j=1; j<=i; j++)); do
-			args="$args $j"
-		done
-	else
-		for ((j=1; j<=i; j++)); do
+	for ((SIZE=1; SIZE<=MAX_SIZE; SIZE++)); do
+		# New seed per size (reproducible)
+		SEED=$RANDOM
+		RANDOM=$SEED
+
+		args=""
+		for ((i=1; i<=SIZE; i++)); do
 			args="$args $((RANDOM % 10000))"
 		done
-	fi
 
-	output=$(./Pmerge$args 2>&1)
+		output=$(./Pmerge$args 2>&1)
 
-	if echo "$output" | grep -qi "no"; then
-		echo -e "${RED}❌ FAILED${RESET}"
-		echo -e "${RED}➡ With $i numbers${RESET}"
-		echo
-		echo "Output:"
-		echo "$output"
-		exit 1
-	fi
+		if echo "$output" | grep -qi "no"; then
+			echo -e "\n${RED}❌ FAILED${RESET}"
+			echo -e "${RED}➡ Cycle $CYCLE | SIZE=$SIZE | SEED=$SEED${RESET}"
 
-	printf "\r${GREEN}✅ OK with %-5d numbers${RESET}" "$i"
+			{
+				echo "CYCLE=$CYCLE SIZE=$SIZE SEED=$SEED"
+				echo "$args"
+				echo "OUTPUT:"
+				echo "$output"
+				echo "-----------------------------"
+			} >> error_test
+
+			echo -e "${RED}➡ Logged in error_test${RESET}"
+		fi
+
+		printf "\r${GREEN}✅ Cycle %-4d | Tested SIZE=%-4d${RESET}" "$CYCLE" "$SIZE"
+	done
+
+	echo
+	((CYCLE++))
 done
-
-echo
-echo -e "${GREEN}🎉 All tests passed up to $MAX numbers${RESET}"
