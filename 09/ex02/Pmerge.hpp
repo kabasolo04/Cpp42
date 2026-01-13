@@ -17,22 +17,23 @@
 #include <vector>
 #include <list>
 #include <sys/time.h>
+#include "Pair.hpp"
 
-struct Pair;
-
-class PmergeVector
+class Pmerge
 {
 	private:
 		std::vector<Pair>	_vector;
+		std::list<Pair>		_list;
+
 		struct timeval		_start;
 		struct timeval		_end;
 		
 	public:
-		PmergeVector();
-		PmergeVector(const PmergeVector& other);
-		~PmergeVector();
+		Pmerge();
+		Pmerge(const Pmerge& other);
+		~Pmerge();
 
-		PmergeVector&	operator = (const PmergeVector& other);
+		Pmerge&	operator = (const Pmerge& other);
 
 		void	add(int num);
 		void	sort();
@@ -40,65 +41,5 @@ class PmergeVector
 
 #endif
 
-struct Pair
-{
-	const Pair*	winner;
-	const Pair*	looser;
-
-	int			num;
-	bool		strangler;
-
-	Pair(int single): winner(NULL), looser(NULL), num(single), strangler(0) {}
-
-	Pair(const Pair& single): winner(single.winner), looser(single.looser), num(single.num), strangler(single.strangler) {}
-
-	Pair(const Pair& single, int flag): winner(NULL), looser(&single), num(single.num), strangler(1) { (void)flag; }
-
-	Pair(const Pair& a, const Pair& b)
-	{
-		if (a.num > b.num)
-		{
-			num = a.num;
-			winner = &a;
-			looser = &b;
-		}
-		else
-		{
-			num = b.num;
-			winner = &b;
-			looser = &a;
-		}
-	}
-
-	//Pair&	operator = (const Pair& other)
-	//{
-	//	if (this != &other)
-	//	{
-	//		num			= other.num;
-	//		strangler	= other.strangler;
-	//		winner		= &other;
-	//		looser		= other.looser;
-	//	}
-	//	return *this;
-	//}
-
-	bool	isStrangler() { return strangler; }
-};
-
-//class PmergeList
-//{
-//	private:
-//		std::list<int>	_list;
-//		struct timeval	_start;
-//		struct timeval	_end;
-//		
-//	public:
-//		PmergeList();
-//		PmergeList(const PmergeList& other);
-//		~PmergeList();
-//
-//		void	add(int num);
-//		void	sort();
-//
-//		PmergeVector&	operator = (const PmergeVector& other);
-//};
+void	fordJonhson(std::vector<Pair>& incoming);
+void	printPairs(std::vector<Pair>& pairs);

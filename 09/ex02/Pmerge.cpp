@@ -1,127 +1,91 @@
 #include "Pmerge.hpp"
 
-PmergeVector::PmergeVector() {}
-PmergeVector::PmergeVector(const PmergeVector& other) { *this = other; }
-PmergeVector::~PmergeVector() {}
+Pmerge::Pmerge() {}
+Pmerge::Pmerge(const Pmerge& other) { *this = other; }
+Pmerge::~Pmerge() {}
 
-PmergeVector&	PmergeVector::operator = (const PmergeVector& other)
+Pmerge&	Pmerge::operator = (const Pmerge& other)
 {
 	if (this != &other)
 		_vector = other._vector;
 	return (*this);
 }
 
-static long getElapsedTimeUs(const struct timeval& start, const struct timeval& end)
-{
-	return (end.tv_sec - start.tv_sec) * 1000000L + (end.tv_usec - start.tv_usec);
-}
+//static long getElapsedTimeUs(const struct timeval& start, const struct timeval& end)
+//{
+//	return (end.tv_sec - start.tv_sec) * 1000000L + (end.tv_usec - start.tv_usec);
+//}
 
-static void	printPairs(std::vector<Pair>& pairs)
+void	printPairs(std::vector<Pair>& pairs)
 {
-	std::cout << "----------------------------------\n";
-
 	for (size_t i = 0; i < pairs.size(); i++)
 	{
-		std::cout << "Winner: " << pairs[i].num << " | Looser: ";
-
-		if (pairs[i].looser == NULL)
-			std::cout << "None";
-		else
-			std::cout << pairs[i].looser->num;
-		
-		std::cout << "\n";
+		std::cout << pairs[i].num << " ";
 	}
 	std::cout << std::endl;
 }
 
-void	PmergeVector::add(int num)
-{
-	_vector.push_back(Pair(num));
-}
-
-//static void insert(std::vector<Pair>& current)
+//static void	printPairs(std::list<Pair>& pairs)
 //{
-//
-//}
-
-//static std::vector<Pair> reOrder(const std::vector<Pair>& incoming, const std::vector<Pair>& current)
-//{
-//
-//}
-
-//static std::vector<Pair> merge(std::vector<Pair>& incoming)
-//{
-//	std::vector<Pair>	out;
-//	size_t				i = 0;
-//
-//	while (i + 1 < incoming.size())
+//	for (std::list<Pair>::iterator it = pairs.begin(); it != pairs.end(); ++it)
 //	{
-//		Pair&	a = incoming[i++];
-//		Pair&	b = incoming[i++];
-//
-//		if (b.looser == NULL)
-//			out.push_back(Pair(a));
-//
-//		out.push_back(Pair(a, b));
+//		std::cout << it->num << " ";
 //	}
-//
-//	if (i < incoming.size())
-//		out.push_back(Pair(incoming[i])); // Strangler
-//
-//	return out;
+//	std::cout << std::endl;
 //}
 
-//static void	fordJonhson(std::vector<Pair>& incoming)
-//{
-//	if (incoming.size() <= 1)
-//		return;
-//
-//	std::vector<Pair>	pairs = merge(incoming);
-//
-//	LeaderBoard	leaderBoard(pairs);
-//
-//	fordJonhson(leaderBoard.winners);
-//
-//	incoming = insert(pairs, leaderBoard);
-//}
-
-static std::vector<Pair> merge(std::vector<Pair>& incoming)
+void	Pmerge::add(int num)
 {
-	std::vector<Pair>	out;
-	size_t				i = 0;
+	Pair	temp(num);
 
-	while (i + 1 < incoming.size())
+	_vector.push_back(temp);
+	_list.push_back(temp);
+}
+
+static const char*	isOrdered(const std::vector<Pair>& pairs)
+{
+	if (pairs.size() < 2)
+		return "yes";
+
+	for (size_t i = 1; i < pairs.size(); ++i)
 	{
-		out.push_back(Pair(incoming[i], incoming[i + 1])); 
-		i += 2;
+		if (pairs[i - 1].num > pairs[i].num)
+		{
+			return "no";
+		}
 	}
-	if (i < incoming.size() && incoming[i].isStrangler() == false)
-		out.push_back(Pair(incoming[i], 0));
-
-	return out;
+	return "yes";
 }
 
-static void	fordJonhson(std::vector<Pair>& incoming)
+void	Pmerge::sort()
 {
-	printPairs(incoming);
+//	std::cout << "Time to process a range of " << _vector.size() << std::endl;
+//	std::cout << "Before: ";
+//	printPairs(_vector);
 
-	if (incoming.size() <= 1)
-		return;
-
-	std::vector<Pair>	pairs = merge(incoming);
-
-	fordJonhson(pairs);
-//
-//	incoming = insert(pairs);
-}
-
-void	PmergeVector::sort()
-{
 	gettimeofday(&_start, NULL);
 
 	fordJonhson(_vector);
 
 	gettimeofday(&_end, NULL);
-	std::cout << "Time to process a range of " << _vector.size() << " elements with std::vector : " << getElapsedTimeUs(_start, _end) << " us" << std::endl;
+	
+//	std::cout << "After: ";
+//	printPairs(_vector);
 
+	std::cout << isOrdered(_vector) << std::endl;
+//	std::cout << "Time to process a range of " << _vector.size() << " elements with std::vector : " << getElapsedTimeUs(_start, _end) << " us" << std::endl;
+	
+//	std::cout << "Before: ";
+//	printPairs(_list);
+//
+//	gettimeofday(&_start, NULL);
+//
+//	fordJonhson(_list);
+//
+//	gettimeofday(&_end, NULL);
+//	
+//	std::cout << "After: ";
+//	printPairs(_list);
+//
+//	std::cout << "Time to process a range of " << _list.size() << " elements with std::vector : " << getElapsedTimeUs(_start, _end) << " us" << std::endl;
 }
